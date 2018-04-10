@@ -1,5 +1,9 @@
 package ethdial
 
+// TODO create a config.json for the contract variables
+// TODO which perhaps should exist above this code in the stack(?)
+// TODO in a single consistent place for configuration
+
 import (
 	"math/big"
 )
