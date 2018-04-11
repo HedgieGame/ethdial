@@ -2,7 +2,6 @@ package ethdial
 
 import (
 	"errors"
-	"fmt"
 	"math/big"
 	"strconv"
 )
@@ -11,7 +10,6 @@ func EnPack(numb []*big.Int, span []int) (*big.Int, error) {
 	// pack big.Ints into a 256-bit pack
 	// []numb are the collection of big.ints
 	// []span are the number of bytes each big.int occupies
-	fmt.Println("toenpack", numb)
 	var err error
 	pack := new(big.Int)
 	if len(numb) == len(span) {
@@ -46,6 +44,5 @@ func UnPack(pack *big.Int, span []int) ([]*big.Int, error) {
 	} else {
 		err = errors.New("length of spans is nil")
 	}
-	fmt.Println("unpacked", numb)
 	return numb, err
 }
