@@ -6,6 +6,8 @@ package ethdial
 
 import (
 	"math/big"
+
+	hedgie "github.com/HedgieGame/hedgie-server/app/domain"
 )
 
 // the HID is unique, but so is the color - one can serve as the other
@@ -78,13 +80,14 @@ var sOwner = 32
 // if we decide to store name it will also need to be a separate mapping
 var sName = 32
 
-func (hed *Hedgie) Peek() (*Hedgie, error) {
+func Peek(hid int) (*hedgie.Hedgie, error) {
 	// fetch the *Hedgie
 	var err error
+	hed := &hedgie.Hedgie{}
 	e := New().
 		Addr(contract).
 		Call(peekFunc).
-		DataInt(hed.HID).
+		DataInt(hid).
 		Dial(endpoint)
 	if e.Error == nil {
 		b, err := UnPack(e.Result, []int{sAir, sCharm, sEarth, sFire, sIntelligence, sLuck, sPrudence, sWater, sLevel, sStatus, sTier})
@@ -100,15 +103,37 @@ func (hed *Hedgie) Peek() (*Hedgie, error) {
 			level, _ := new(big.Float).SetInt(b[8]).Int64()
 			hed.Level = int(level)
 			status, _ := new(big.Float).SetInt(b[9]).Int64()
-			hed.Status = int(status)
+			switch status {
+			case 0:
+				hed.Status = hedgie.StatusAvail
+			case 1:
+				hed.Status = hedgie.StatusPending
+			case 2:
+				hed.Status = hedgie.StatusSold
+			}
 			tier, _ := new(big.Float).SetInt(b[10]).Int64()
-			hed.Tier = int(tier)
+			switch tier {
+			case 1:
+				hed.Tier = hedgie.HedgieTier1
+			case 2:
+				hed.Tier = hedgie.HedgieTier2
+			case 3:
+				hed.Tier = hedgie.HedgieTier3
+			case 4:
+				hed.Tier = hedgie.HedgieTier4
+			case 5:
+				hed.Tier = hedgie.HedgieTier5
+			case 6:
+				hed.Tier = hedgie.HedgieTier6
+			case 7:
+				hed.Tier = hedgie.HedgieTier7
+			}
 		}
 	}
 	return hed, err
 }
 
-func (hed *Hedgie) Poke(wait int, fTran funcTran) (string, error) {
+func Poke(hed *hedgie.Hedgie, wait int, fTran funcTran) (string, error) {
 	// store the *Hedgie
 	var err error
 	var tid string
