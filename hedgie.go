@@ -30,18 +30,18 @@ import (
 //var peekFunc = "Peek(uint256)"
 //var pokeFunc = "Poke(uint256,uint256)"
 // var endpoint = "https://mainnet.infura.io/pQZitksokILr3E3rp7u8"
-var endpoint = "https://rinkeby.infura.io/pQZitksokILr3E3rp7u8"
-var private = "12BF6F0806822A6763205D012A3302F73646B50DA9F4B71826CD86F794EE5B3E"
-var contract = "0xBa4764def35E38397Fbdd7e6570a9Da97378a5c3"
-var gasLimit = uint64(100000)
-var gasPrice = big.NewInt(1 * 10000000000) // 10 gwei
-var peekFunc = "Peek(uint256)"
-var pokeFunc = "Poke(uint256,uint256)"
 
-var sIndex = 1
+type Config struct {
+	Endpoint string
+	Private  string
+	Contract string
+	GasLimit uint64
+	GasPrice *big.Int
+	PeekFunc string
+	PokeFunc string
+}
 
 // these are the number of bytes each struct element occupies in Eth storage
-// index 0
 var sAir = 3
 var sCharm = 3
 var sEarth = 3
@@ -50,7 +50,6 @@ var sIntelligence = 3
 var sLuck = 3
 var sPrudence = 3
 var sWater = 3
-
 var sLevel = 1
 var sStatus = 1
 var sTier = 1
@@ -61,15 +60,15 @@ var sOwner = 32
 // if we decide to store name it will also need to be a separate mapping
 var sName = 32
 
-func Peek(hid int) (*hedgie.Hedgie, error) {
+func Peek(config *Config, hid int) (*hedgie.Hedgie, error) {
 	// fetch the *Hedgie
 	var err error
 	hed := &hedgie.Hedgie{}
 	e := New().
-		Addr(contract).
-		Call(peekFunc).
+		Addr(config.Contract).
+		Call(config.PeekFunc).
 		DataInt(hid).
-		Dial(endpoint)
+		Dial(config.Endpoint)
 	if e.Error == nil {
 		b, err := UnPack(e.Result, []int{sAir, sCharm, sEarth, sFire, sIntelligence, sLuck, sPrudence, sWater, sLevel, sStatus, sTier})
 		if err == nil {
@@ -114,7 +113,7 @@ func Peek(hid int) (*hedgie.Hedgie, error) {
 	return hed, err
 }
 
-func Poke(hed *hedgie.Hedgie, wait int, fTran funcTran) (string, error) {
+func Poke(config *Config, hed *hedgie.Hedgie, wait int, fTran funcTran) (string, error) {
 	// store the *Hedgie
 	var err error
 	var tid string
@@ -142,15 +141,15 @@ func Poke(hed *hedgie.Hedgie, wait int, fTran funcTran) (string, error) {
 		[]int{sAir, sCharm, sEarth, sFire, sIntelligence, sLuck, sPrudence, sWater, sLevel, sStatus, sTier})
 	if err == nil {
 		e := New().
-			Sign(private).
-			Addr(contract).
-			Limit(gasLimit).
-			Price(gasPrice).
-			Call(pokeFunc).
+			Sign(config.Private).
+			Addr(config.Contract).
+			Limit(config.GasLimit).
+			Price(config.GasPrice).
+			Call(config.PokeFunc).
 			DataInt(hed.HID).
 			DataBigInt(packed).
 			Tran(wait, fTran).
-			Dial(endpoint)
+			Dial(config.Endpoint)
 		tid = e.EthTranString
 		err = e.Error
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 	"math/rand"
 	"os"
 	"time"
@@ -13,8 +14,18 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
+	config := &ethdial.Config{
+		Endpoint: "https://rinkeby.infura.io/pQZitksokILr3E3rp7u8",
+		Private:  "12BF6F0806822A6763205D012A3302F73646B50DA9F4B71826CD86F794EE5B3E",
+		Contract: "0xBa4764def35E38397Fbdd7e6570a9Da97378a5c3",
+		GasLimit: uint64(100000),
+		GasPrice: big.NewInt(1 * 10000000000),
+		PeekFunc: "Peek(uint256)",
+		PokeFunc: "Poke(uint256,uint256)",
+	}
+
 	//peek hedgie
-	hed, err := ethdial.Peek(12345)
+	hed, err := ethdial.Peek(config, 12345)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -38,7 +49,7 @@ func main() {
 	//	spew.Dump(hed)
 
 	// poke hedgie
-	tid, err := ethdial.Poke(hed, 100, done)
+	tid, err := ethdial.Poke(config, hed, 100, done)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
