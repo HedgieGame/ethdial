@@ -56,8 +56,7 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println(tid, "pending")
-	for {
-	}
+	select {}
 }
 
 func done(e *ethdial.EthDial) {
