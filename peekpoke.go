@@ -63,7 +63,7 @@ var sName = 32
 func Peek(config *Config, hid int) (*hedgie.Hedgie, error) {
 	// fetch the *Hedgie
 	var err error
-	hed := &hedgie.Hedgie{}
+	hed := &hedgie.Hedgie{HID: hid}
 	e := New().
 		Addr(config.Contract).
 		Call(config.PeekFunc).
