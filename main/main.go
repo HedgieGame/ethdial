@@ -7,20 +7,22 @@ import (
 	"time"
 
 	"bitbucket.org/billyharvey/ethdial"
+	hedgie "github.com/HedgieGame/hedgie-server/app/domain"
 )
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
-	hed := &ethdial.Hedgie{HID: 12345}
 
 	//peek hedgie
-	hed, err := hed.Peek()
+	hed, err := ethdial.Peek(12345)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 	//	spew.Dump(hed)
 
+	hStatus := []hedgie.HedgieStatus{hedgie.StatusAvail, hedgie.StatusPending, hedgie.StatusSold}
+	hTier := []hedgie.HedgieTierLevel{hedgie.HedgieTier1, hedgie.HedgieTier2, hedgie.HedgieTier3, hedgie.HedgieTier4, hedgie.HedgieTier5, hedgie.HedgieTier6, hedgie.HedgieTier7}
 	// change some values
 	hed.Air = float64(rand.Intn(100000))
 	hed.Charm = float64(rand.Intn(100000))
@@ -31,12 +33,12 @@ func main() {
 	hed.Prudence = float64(rand.Intn(100000))
 	hed.Water = float64(rand.Intn(100000))
 	hed.Level = rand.Intn(256)
-	hed.Status = rand.Intn(256)
-	hed.Tier = rand.Intn(256)
+	hed.Status = hStatus[rand.Intn(3)]
+	hed.Tier = hTier[rand.Intn(7)]
 	//	spew.Dump(hed)
 
 	// poke hedgie
-	tid, err := hed.Poke(100, done)
+	tid, err := ethdial.Poke(hed, 100, done)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

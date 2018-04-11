@@ -21,25 +21,6 @@ import (
 // 8 bits allow 32 character names
 // if we allow UTF-8 it will be variable but the ASCII set is each 8 bits
 
-type Hedgie struct {
-	HID          int     `json:"hid"`   // id of the hedgie - same as the color?
-	Color        string  `json:"color"` // 2^24 3x8-bit
-	Name         *string `json:"name"`  //
-	Fire         float64 `json:"fire"`
-	Water        float64 `json:"water"`
-	Earth        float64 `json:"earth"`
-	Air          float64 `json:"air"`
-	Intelligence float64 `json:"intelligence"`
-	Luck         float64 `json:"luck"`
-	Prudence     float64 `json:"prudence"`
-	Charm        float64 `json:"charm"`
-	Owner        *string `json:"owner"`
-	Status       int     `json:"status"`
-	Tier         int     `json:"tier"`
-	Level        int     `json:"level"`
-	ImgURL       *string `json:"imgURL"`
-}
-
 // these change if the contract changes
 //var endpoint = "http://localhost:8545"
 //var private = "12bf6f0806822a6763205d012a3302f73646b50da9f4b71826cd86f794ee5b3e"
