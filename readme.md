@@ -8,6 +8,7 @@ ethdial
 
 This code acts as an abstraction interface between the Hedgie creature manipulation code and the blockchain which is to be used as a system of record for ownership, characteristics, etc.  The current state of the Ethereum VM disallows calling functions with sufficient variables to store the several characteristics of each Hedgie, so the approach is taken of taking a Hedgie struct and packing the several elements into a single 256-bit word, which is then stored and retrieved via a simple Solidity contract that acts on just an Address and a Value.  The contract is in peekpoke.sol (one potential improvement is to add a *collection* parameter, which will be hashed with the Hedgie.HID, allowing several different stores of values).
  
+**TODO** Evaluate adding a *collection* parameter to dsicriminate between multipel storage, err, collections.
 
 The two entry points are Hedgie.Peek() and Hedgie.Poke(), in the peek.go file.
 
