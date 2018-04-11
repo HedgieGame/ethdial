@@ -3,6 +3,7 @@ package ethdial
 import (
 	"context"
 	"crypto/ecdsa"
+	"fmt"
 	"math/big"
 	"time"
 
@@ -80,10 +81,12 @@ func (e *EthDial) TranWait() {
 	e.EthTranWait = int(time.Now().Unix()) + e.EthTranWait
 	for {
 		time.Sleep(10 * time.Second)
+		fmt.Println(".")
 		receipt, _ := e.EthClient.TransactionReceipt(ctx, e.EthTran)
 		if receipt == nil {
 			e.EthTranStatus = "pending"
 		} else {
+			fmt.Println("\n")
 			switch receipt.Status {
 			case 0:
 				e.EthTranStatus = "failure"
