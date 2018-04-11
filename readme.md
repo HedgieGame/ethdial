@@ -2,7 +2,7 @@ ethdial
 
 **Current Problems**
 
-The test run in main/main.go results in a failed transaction on Rinkeby.  This is suspected to be incorrect gas settings, but the debugger on ethersca.io isn't helping much.  This is at least better than the several days spent discovering that ganache-cli is returning a different Transaction ID than the one it reports to the screen.  They've acknowledged the bug bug have not released a fix.
+The test run in main/main.go results in a failed transaction on Rinkeby.  This is suspected to be incorrect gas settings, but the debugger on etherscan.io isn't helping much.  This is at least better than the several days spent discovering that ganache-cli is returning a different Transaction ID than the one it reports to the screen.  They've acknowledged the bug have not released a fix.
 
 **Overview**
 
