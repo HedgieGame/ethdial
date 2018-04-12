@@ -24,15 +24,6 @@ func main() {
 	Config.GasPrice = big.NewInt(1000000000) // 10^9 = 1Gwei
 	Config.PeekFunc = "Peek(uint256)"
 	Config.PokeFunc = "Poke(uint256,uint256)"
-	Config.BossFunc = "Boss()"
-
-	// who's the boss
-	boss := ethdial.Boss(&Config)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	fmt.Println(boss)
 
 	//peek hedgie
 	hed, err := ethdial.Peek(&Config, 12345)
