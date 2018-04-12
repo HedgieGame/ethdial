@@ -39,6 +39,7 @@ type Config struct {
 	GasPrice *big.Int
 	PeekFunc string
 	PokeFunc string
+	BossFunc string
 }
 
 // these are the number of bytes each struct element occupies in Eth storage
@@ -59,6 +60,19 @@ var sOwner = 32
 
 // if we decide to store name it will also need to be a separate mapping
 var sName = 32
+
+func Boss(config *Config) (string, error) {
+	// fetch the boss
+	var boss string
+	e := New().
+		Addr(config.Contract).
+		Call(config.BossFunc).
+		Dial(config.Endpoint)
+	if e.Error == nil {
+		boss = e.Result.Text(16)
+	}
+	return boss, e.Error
+}
 
 func Peek(config *Config, hid int) (*hedgie.Hedgie, error) {
 	// fetch the *Hedgie

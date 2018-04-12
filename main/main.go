@@ -19,11 +19,20 @@ func main() {
 
 	Config.Endpoint = "https://rinkeby.infura.io/pQZitksokILr3E3rp7u8"
 	Config.Private = "12BF6F0806822A6763205D012A3302F73646B50DA9F4B71826CD86F794EE5B3E"
-	Config.Contract = "0xBa4764def35E38397Fbdd7e6570a9Da97378a5c3"
-	Config.GasLimit = uint64(350000)
-	Config.GasPrice = big.NewInt(15000000000)
+	Config.Contract = "0x1b229d108D6a2fa9f8d53FaCFaf8E57F03a4670F"
+	Config.GasLimit = uint64(1000000)        // raises pinky
+	Config.GasPrice = big.NewInt(1000000000) // 10^9 = 1Gwei
 	Config.PeekFunc = "Peek(uint256)"
 	Config.PokeFunc = "Poke(uint256,uint256)"
+	Config.BossFunc = "Boss()"
+
+	// who's the boss
+	boss := ethdial.Boss(&Config)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	fmt.Println(boss)
 
 	//peek hedgie
 	hed, err := ethdial.Peek(&Config, 12345)
