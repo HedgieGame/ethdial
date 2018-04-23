@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-type funcTran func(*EthDial)
+type FuncTran func(*EthDial)
 
 type EthDial struct {
 	EthAddr       common.Address
@@ -32,7 +32,7 @@ type EthDial struct {
 	Result        *big.Int
 	EthSign       *ecdsa.PrivateKey
 	EthTran       common.Hash
-	EthTranFunc   funcTran
+	EthTranFunc   FuncTran
 	EthTranStatus string
 	EthTranString string
 	EthTranWait   int
@@ -244,7 +244,7 @@ func (e *EthDial) DataBigInt(a *big.Int) *EthDial {
 }
 
 //
-func (e *EthDial) Tran(wait int, fTran funcTran) *EthDial {
+func (e *EthDial) Tran(wait int, fTran FuncTran) *EthDial {
 	e.EthTranWait = wait
 	e.EthTranFunc = fTran
 	return e

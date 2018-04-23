@@ -19,7 +19,7 @@ func main() {
 
 	Config.Endpoint = "https://rinkeby.infura.io/pQZitksokILr3E3rp7u8"
 	Config.Private = "12BF6F0806822A6763205D012A3302F73646B50DA9F4B71826CD86F794EE5B3E"
-	Config.Contract = "0x1b229d108D6a2fa9f8d53FaCFaf8E57F03a4670F"
+	Config.Contract = "0x334e3150a2e8E5Bc6238C790D4aC03D9B16CB377"
 	Config.GasLimit = uint64(1000000)        // raises pinky
 	Config.GasPrice = big.NewInt(1000000000) // 10^9 = 1Gwei
 	Config.PeekFunc = "Peek(uint256)"
@@ -33,6 +33,7 @@ func main() {
 	}
 	spew.Dump(hed)
 
+	// change stuff to random values
 	hStatus := []hedgie.HedgieStatus{hedgie.StatusAvail, hedgie.StatusPending, hedgie.StatusSold}
 	hTier := []hedgie.HedgieTierLevel{hedgie.HedgieTier1, hedgie.HedgieTier2, hedgie.HedgieTier3, hedgie.HedgieTier4, hedgie.HedgieTier5, hedgie.HedgieTier6, hedgie.HedgieTier7}
 	// change some values

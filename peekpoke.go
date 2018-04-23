@@ -114,7 +114,7 @@ func Peek(config *Config, hid int) (*hedgie.Hedgie, error) {
 	return hed, err
 }
 
-func Poke(config *Config, hed *hedgie.Hedgie, wait int, fTran funcTran) (string, error) {
+func Poke(config *Config, hed *hedgie.Hedgie, wait int, fTran FuncTran) (string, error) {
 	// store the *Hedgie
 	var err error
 	var tid string
